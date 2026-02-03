@@ -33,3 +33,8 @@ int main() {
     cout << "No pair found" << endl;
     return 0;
 }
+
+
+// Approach: HashMap to store seen elements
+// Time Complexity: O(n)
+// Space Complexity: O(n)
