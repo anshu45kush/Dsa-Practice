@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SolarEdge – Power Your Future</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            solar: {
+              50:  '#fff8e1',
+              100: '#ffecb3',
+              400: '#ffca28',
+              500: '#ffa000',
+              600: '#ff8f00',
+            },
+            navy: {
+              800: '#0d2240',
+              900: '#071428',
+            },
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+          },
+        },
+      },
+    };
+  </script>
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Utility helpers ───────────────────────────── */
+    html { font-family: 'Inter', sans-serif; }
+
+    /* Fade-in animation for scroll reveal */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Gradient hero background */
+    .hero-bg {
+      background: linear-gradient(135deg, #071428 0%, #0d2240 55%, #1a3a6e 100%);
+    }
+
+    /* Accent underline for headings */
+    .accent-line::after {
+      content: '';
+      display: block;
+      width: 56px;
+      height: 4px;
+      background: #ffa000;
+      border-radius: 2px;
+      margin: 12px auto 0;
+    }
+
+    /* FAQ transition */
+    .faq-body { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+    .faq-body.open { max-height: 400px; }
+
+    /* Star rating */
+    .stars { color: #ffa000; letter-spacing: 2px; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased">
+
+  <!-- ════════════════════════════════════════════════
+       NAVBAR
+  ════════════════════════════════════════════════ -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-navy-900/90 backdrop-blur-md shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Logo -->
+        <a href="#home" class="flex items-center gap-2 group">
+          <span class="text-solar-400 text-2xl">&#9728;&#65039;</span>
+          <span class="text-white font-extrabold text-xl tracking-tight group-hover:text-solar-400 transition-colors">
+            Solar<span class="text-solar-400">Edge</span>
+          </span>
+        </a>
+
+        <!-- Desktop nav links -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#home"       class="nav-link text-gray-300 hover:text-solar-400 font-medium transition-colors text-sm">Home</a>
+          <a href="#services"   class="nav-link text-gray-300 hover:text-solar-400 font-medium transition-colors text-sm">Services</a>
+          <a href="#calculator" class="nav-link text-gray-300 hover:text-solar-400 font-medium transition-colors text-sm">Calculator</a>
+          <a href="#contact"    class="nav-link text-gray-300 hover:text-solar-400 font-medium transition-colors text-sm">Contact</a>
+        </div>
+
+        <!-- CTA + mobile hamburger -->
+        <div class="flex items-center gap-3">
+          <a href="#contact"
+             class="hidden sm:inline-flex items-center gap-2 bg-solar-500 hover:bg-solar-600 text-white text-sm font-semibold px-5 py-2 rounded-full shadow-md transition-all hover:scale-105 active:scale-95">
+            Get Free Quote
+          </a>
+          <!-- Mobile menu button -->
+          <button id="menu-btn" class="md:hidden text-gray-300 hover:text-solar-400 focus:outline-none" aria-label="Toggle menu">
+            <svg id="icon-open"  class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile dropdown -->
+    <div id="mobile-menu" class="md:hidden hidden bg-navy-900/95 backdrop-blur-md border-t border-white/10">
+      <div class="px-4 py-4 flex flex-col gap-4">
+        <a href="#home"       class="text-gray-300 hover:text-solar-400 font-medium transition-colors" onclick="closeMobileMenu()">Home</a>
+        <a href="#services"   class="text-gray-300 hover:text-solar-400 font-medium transition-colors" onclick="closeMobileMenu()">Services</a>
+        <a href="#calculator" class="text-gray-300 hover:text-solar-400 font-medium transition-colors" onclick="closeMobileMenu()">Calculator</a>
+        <a href="#contact"    class="text-gray-300 hover:text-solar-400 font-medium transition-colors" onclick="closeMobileMenu()">Contact</a>
+        <a href="#contact"    class="bg-solar-500 text-white text-center font-semibold px-5 py-2 rounded-full" onclick="closeMobileMenu()">Get Free Quote</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════════════════════
+       HERO SECTION
+  ════════════════════════════════════════════════ -->
+  <section id="home" class="hero-bg min-h-screen flex items-center pt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32 grid lg:grid-cols-2 gap-12 items-center">
+
+      <!-- Text column -->
+      <div class="reveal">
+        <span class="inline-block bg-solar-500/20 text-solar-400 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-4">
+          #1 Trusted Solar Provider
+        </span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight mb-6">
+          Save Up to <span class="text-solar-400">90%</span> on<br/>Your Electricity Bill
+        </h1>
+        <p class="text-gray-300 text-lg leading-relaxed mb-8 max-w-lg">
+          Switch to solar energy and unlock government subsidies up to ₹78,000.
+          Clean power, zero-down financing, and lifetime savings — starting today.
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <a href="#contact"
+             class="inline-flex items-center gap-2 bg-solar-500 hover:bg-solar-600 text-white font-semibold px-7 py-3 rounded-full shadow-lg transition-all hover:scale-105 active:scale-95 text-sm">
+            Get Free Consultation
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+          </a>
+          <a href="#calculator"
+             class="inline-flex items-center gap-2 border border-white/30 text-white hover:border-solar-400 hover:text-solar-400 font-semibold px-7 py-3 rounded-full transition-all text-sm">
+            Calculate Savings
+          </a>
+        </div>
+        <!-- Social proof pills -->
+        <div class="mt-10 flex flex-wrap gap-6 text-sm text-gray-400">
+          <div class="flex items-center gap-2"><span class="text-solar-400 font-bold text-xl">5,000+</span> Installations</div>
+          <div class="flex items-center gap-2"><span class="text-solar-400 font-bold text-xl">25yr</span> Warranty</div>
+          <div class="flex items-center gap-2"><span class="text-solar-400 font-bold text-xl">4.9★</span> Rating</div>
+        </div>
+      </div>
+
+      <!-- Illustration / Stats card column -->
+      <div class="reveal flex justify-center lg:justify-end">
+        <div class="relative w-full max-w-sm">
+          <!-- Glow blob -->
+          <div class="absolute inset-0 rounded-3xl bg-solar-500/20 blur-3xl"></div>
+          <div class="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 shadow-2xl">
+            <!-- Big sun icon -->
+            <div class="text-center text-7xl mb-6">&#9728;&#65039;</div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="bg-white/10 rounded-2xl p-4 text-center">
+                <p class="text-solar-400 text-2xl font-bold">₹1.2L</p>
+                <p class="text-gray-300 text-xs mt-1">Avg. Annual Savings</p>
+              </div>
+              <div class="bg-white/10 rounded-2xl p-4 text-center">
+                <p class="text-solar-400 text-2xl font-bold">12 kWh</p>
+                <p class="text-gray-300 text-xs mt-1">Daily Generation (3kW)</p>
+              </div>
+              <div class="bg-white/10 rounded-2xl p-4 text-center">
+                <p class="text-solar-400 text-2xl font-bold">0 CO₂</p>
+                <p class="text-gray-300 text-xs mt-1">Carbon Footprint</p>
+              </div>
+              <div class="bg-white/10 rounded-2xl p-4 text-center">
+                <p class="text-solar-400 text-2xl font-bold">25yr</p>
+                <p class="text-gray-300 text-xs mt-1">Panel Warranty</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       SAVINGS CALCULATOR
+  ════════════════════════════════════════════════ -->
+  <section id="calculator" class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12 reveal">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-navy-900 accent-line">Solar Savings Calculator</h2>
+        <p class="mt-4 text-gray-500 max-w-xl mx-auto">Enter your monthly electricity bill and instantly discover your potential savings, recommended system size, and payback period.</p>
+      </div>
+
+      <div class="bg-gradient-to-br from-navy-900 to-navy-800 rounded-3xl shadow-2xl overflow-hidden reveal">
+        <div class="grid md:grid-cols-2">
+
+          <!-- Input side -->
+          <div class="p-8 lg:p-10">
+            <h3 class="text-white font-bold text-lg mb-6">Your Electricity Details</h3>
+            <div class="space-y-5">
+              <div>
+                <label class="text-gray-300 text-sm font-medium block mb-1">Monthly Electricity Bill (₹)</label>
+                <input id="calc-bill" type="number" min="100" placeholder="e.g. 3000"
+                       class="w-full bg-white/10 text-white placeholder-gray-400 border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-solar-400 transition" />
+                <p id="calc-bill-error" role="alert" aria-live="polite" class="text-red-400 text-xs mt-1 hidden">Please enter a valid bill amount (minimum ₹100).</p>
+              </div>
+              <div>
+                <label class="text-gray-300 text-sm font-medium block mb-1">State</label>
+                <select id="calc-state"
+                        class="w-full bg-white/10 text-gray-300 border border-white/20 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-solar-400 transition appearance-none">
+                  <option value="general">Select your state</option>
+                  <option value="maharashtra">Maharashtra</option>
+                  <option value="gujarat">Gujarat</option>
+                  <option value="rajasthan">Rajasthan</option>
+                  <option value="karnataka">Karnataka</option>
+                  <option value="up">Uttar Pradesh</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <button id="calc-btn"
+                      onclick="calculateSavings()"
+                      class="w-full bg-solar-500 hover:bg-solar-600 text-white font-semibold py-3 rounded-xl shadow-md transition-all hover:scale-[1.02] active:scale-95">
+                Calculate My Savings ⚡
+              </button>
+            </div>
+          </div>
+
+          <!-- Results side -->
+          <div id="calc-results" class="p-8 lg:p-10 border-t md:border-t-0 md:border-l border-white/10 flex flex-col justify-center">
+            <h3 class="text-white font-bold text-lg mb-6">Your Estimated Results</h3>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="bg-white/10 rounded-2xl p-4">
+                <p class="text-gray-400 text-xs mb-1">Monthly Savings</p>
+                <p id="res-monthly" class="text-solar-400 text-2xl font-extrabold">₹–</p>
+              </div>
+              <div class="bg-white/10 rounded-2xl p-4">
+                <p class="text-gray-400 text-xs mb-1">Annual Savings</p>
+                <p id="res-annual" class="text-solar-400 text-2xl font-extrabold">₹–</p>
+              </div>
+              <div class="bg-white/10 rounded-2xl p-4">
+                <p class="text-gray-400 text-xs mb-1">System Size</p>
+                <p id="res-size" class="text-solar-400 text-2xl font-extrabold">– kW</p>
+              </div>
+              <div class="bg-white/10 rounded-2xl p-4">
+                <p class="text-gray-400 text-xs mb-1">Payback Period</p>
+                <p id="res-payback" class="text-solar-400 text-2xl font-extrabold">– yrs</p>
+              </div>
+            </div>
+            <p id="res-subsidy" class="mt-4 text-sm text-gray-300 hidden"></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       GOVERNMENT SUBSIDY SECTION
+  ════════════════════════════════════════════════ -->
+  <section id="subsidy" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 reveal">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-navy-900 accent-line">Government Subsidy Benefits</h2>
+        <p class="mt-4 text-gray-500 max-w-xl mx-auto">Under PM Surya Ghar: Muft Bijli Yojana, get up to ₹78,000 direct subsidy on your solar installation.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card template repeated for each benefit -->
+        <div class="reveal bg-white rounded-2xl shadow-md p-6 flex gap-4 hover:shadow-xl transition-shadow">
+          <div class="flex-shrink-0 w-12 h-12 bg-solar-50 text-solar-500 rounded-xl flex items-center justify-center text-2xl">💰</div>
+          <div>
+            <h3 class="font-bold text-navy-900 mb-1">Up to ₹78,000 Subsidy</h3>
+            <p class="text-gray-500 text-sm">Residential rooftop solar installations receive direct benefit transfer from central government.</p>
+          </div>
+        </div>
+
+        <div class="reveal bg-white rounded-2xl shadow-md p-6 flex gap-4 hover:shadow-xl transition-shadow">
+          <div class="flex-shrink-0 w-12 h-12 bg-solar-50 text-solar-500 rounded-xl flex items-center justify-center text-2xl">🔋</div>
+          <div>
+            <h3 class="font-bold text-navy-900 mb-1">300 Units Free per Month</h3>
+            <p class="text-gray-500 text-sm">Generate your own electricity and get up to 300 units of electricity free every month.</p>
+          </div>
+        </div>
+
+        <div class="reveal bg-white rounded-2xl shadow-md p-6 flex gap-4 hover:shadow-xl transition-shadow">
+          <div class="flex-shrink-0 w-12 h-12 bg-solar-50 text-solar-500 rounded-xl flex items-center justify-center text-2xl">🏦</div>
+          <div>
+            <h3 class="font-bold text-navy-900 mb-1">Low-Interest Loans</h3>
+            <p class="text-gray-500 text-sm">Collateral-free loans at subsidised interest rates through nationalised banks.</p>
+          </div>
+        </div>
+
+        <div class="reveal bg-white rounded-2xl shadow-md p-6 flex gap-4 hover:shadow-xl transition-shadow">
+          <div class="flex-shrink-0 w-12 h-12 bg-solar-50 text-solar-500 rounded-xl flex items-center justify-center text-2xl">📊</div>
+          <div>
+            <h3 class="font-bold text-navy-900 mb-1">Net Metering Credit</h3>
+            <p class="text-gray-500 text-sm">Sell surplus electricity back to the grid and earn credits on your electricity bill.</p>
+          </div>
+        </div>
+
+        <div class="reveal bg-white rounded-2xl shadow-md p-6 flex gap-4 hover:shadow-xl transition-shadow">
+          <div class="flex-shrink-0 w-12 h-12 bg-solar-50 text-solar-500 rounded-xl flex items-center justify-center text-2xl">🏛️</div>
+          <div>
+            <h3 class="font-bold text-navy-900 mb-1">State Top-Up Subsidies</h3>
+            <p class="text-gray-500 text-sm">Additional subsidies from state governments in Gujarat, Rajasthan, Maharashtra & more.</p>
+          </div>
+        </div>
+
+        <div class="reveal bg-white rounded-2xl shadow-md p-6 flex gap-4 hover:shadow-xl transition-shadow">
+          <div class="flex-shrink-0 w-12 h-12 bg-solar-50 text-solar-500 rounded-xl flex items-center justify-center text-2xl">📝</div>
+          <div>
+            <h3 class="font-bold text-navy-900 mb-1">We Handle All Paperwork</h3>
+            <p class="text-gray-500 text-sm">Our experts manage all government documentation and subsidy applications on your behalf.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTA Banner -->
+      <div class="mt-12 reveal bg-gradient-to-r from-solar-500 to-solar-600 rounded-2xl p-8 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl">
+        <div>
+          <h3 class="text-white font-extrabold text-xl">Check Your Subsidy Eligibility Today</h3>
+          <p class="text-white/80 text-sm mt-1">Free assessment — no obligation required.</p>
+        </div>
+        <a href="#contact" class="flex-shrink-0 bg-white text-solar-600 hover:bg-solar-50 font-bold px-6 py-3 rounded-full shadow-md transition-all hover:scale-105 text-sm">
+          Check Eligibility →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       SERVICES SECTION
+  ════════════════════════════════════════════════ -->
+  <section id="services" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 reveal">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-navy-900 accent-line">Our Services</h2>
+        <p class="mt-4 text-gray-500 max-w-xl mx-auto">End-to-end solar solutions for homes and businesses — from design to installation to lifelong support.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <!-- Solar Installation -->
+        <div class="reveal group bg-gray-50 hover:bg-navy-900 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 cursor-default">
+          <div class="w-14 h-14 bg-solar-500/10 group-hover:bg-solar-500/20 text-solar-500 rounded-2xl flex items-center justify-center text-3xl mb-6 transition-all">☀️</div>
+          <h3 class="text-xl font-bold text-navy-900 group-hover:text-white mb-3 transition-colors">Solar Installation</h3>
+          <p class="text-gray-500 group-hover:text-gray-300 text-sm leading-relaxed transition-colors">Premium mono-PERC panels with certified installation by our trained engineers. On-rooftop or ground-mount setups available.</p>
+          <ul class="mt-4 space-y-2">
+            <li class="flex items-center gap-2 text-xs text-gray-400 group-hover:text-gray-300 transition-colors"><span class="text-solar-400">✔</span> Site survey & design</li>
+            <li class="flex items-center gap-2 text-xs text-gray-400 group-hover:text-gray-300 transition-colors"><span class="text-solar-400">✔</span> Tier-1 panel brands</li>
+            <li class="flex items-center gap-2 text-xs text-gray-400 group-hover:text-gray-300 transition-colors"><span class="text-solar-400">✔</span> Same-day activation</li>
+          </ul>
+        </div>
+
+        <!-- Maintenance -->
+        <div class="reveal group bg-gray-50 hover:bg-navy-900 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 cursor-default">
+          <div class="w-14 h-14 bg-solar-500/10 group-hover:bg-solar-500/20 text-solar-500 rounded-2xl flex items-center justify-center text-3xl mb-6 transition-all">🔧</div>
+          <h3 class="text-xl font-bold text-navy-900 group-hover:text-white mb-3 transition-colors">Annual Maintenance</h3>
+          <p class="text-gray-500 group-hover:text-gray-300 text-sm leading-relaxed transition-colors">Keep your system performing at peak efficiency with our comprehensive AMC plans — remote monitoring included.</p>
+          <ul class="mt-4 space-y-2">
+            <li class="flex items-center gap-2 text-xs text-gray-400 group-hover:text-gray-300 transition-colors"><span class="text-solar-400">✔</span> Quarterly panel cleaning</li>
+            <li class="flex items-center gap-2 text-xs text-gray-400 group-hover:text-gray-300 transition-colors"><span class="text-solar-400">✔</span> 24/7 remote monitoring</li>
+            <li class="flex items-center gap-2 text-xs text-gray-400 group-hover:text-gray-300 transition-colors"><span class="text-solar-400">✔</span> Priority support calls</li>
+          </ul>
+        </div>
+
+        <!-- Financing -->
+        <div class="reveal group bg-gray-50 hover:bg-navy-900 rounded-3xl p-8 shadow-sm hover:shadow-2xl transition-all duration-300 cursor-default">
+          <div class="w-14 h-14 bg-solar-500/10 group-hover:bg-solar-500/20 text-solar-500 rounded-2xl flex items-center justify-center text-3xl mb-6 transition-all">💳</div>
+          <h3 class="text-xl font-bold text-navy-900 group-hover:text-white mb-3 transition-colors">Easy Financing</h3>
+          <p class="text-gray-500 group-hover:text-gray-300 text-sm leading-relaxed transition-colors">Zero down-payment EMI plans starting from ₹1,200/month. Your savings often exceed your EMI from day one.</p>
+          <ul class="mt-4 space-y-2">
+            <li class="flex items-center gap-2 text-xs text-gray-400 group-hover:text-gray-300 transition-colors"><span class="text-solar-400">✔</span> 0% down payment</li>
+            <li class="flex items-center gap-2 text-xs text-gray-400 group-hover:text-gray-300 transition-colors"><span class="text-solar-400">✔</span> Up to 7-year tenure</li>
+            <li class="flex items-center gap-2 text-xs text-gray-400 group-hover:text-gray-300 transition-colors"><span class="text-solar-400">✔</span> Subsidy adjustments</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       WHY CHOOSE US
+  ════════════════════════════════════════════════ -->
+  <section id="why-us" class="py-20 bg-navy-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 reveal">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white accent-line">Why Choose SolarEdge?</h2>
+        <p class="mt-4 text-gray-400 max-w-xl mx-auto">We combine world-class technology with transparent pricing and dedicated after-care — so you never have to worry.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <div class="reveal text-center p-6 bg-white/5 rounded-2xl border border-white/10 hover:border-solar-400/40 transition-all">
+          <div class="text-4xl mb-4">🏆</div>
+          <h3 class="text-white font-bold mb-2">Premium Quality</h3>
+          <p class="text-gray-400 text-sm">Only Tier-1 panels from LG, JA Solar, and Longi with bankable warranties.</p>
+        </div>
+
+        <div class="reveal text-center p-6 bg-white/5 rounded-2xl border border-white/10 hover:border-solar-400/40 transition-all">
+          <div class="text-4xl mb-4">🛡️</div>
+          <h3 class="text-white font-bold mb-2">25-Year Warranty</h3>
+          <p class="text-gray-400 text-sm">Industry-best product and performance warranty covering panels, inverters, and installation.</p>
+        </div>
+
+        <div class="reveal text-center p-6 bg-white/5 rounded-2xl border border-white/10 hover:border-solar-400/40 transition-all">
+          <div class="text-4xl mb-4">📞</div>
+          <h3 class="text-white font-bold mb-2">24/7 Support</h3>
+          <p class="text-gray-400 text-sm">Dedicated customer success team available round the clock via phone, chat, and on-site.</p>
+        </div>
+
+        <div class="reveal text-center p-6 bg-white/5 rounded-2xl border border-white/10 hover:border-solar-400/40 transition-all">
+          <div class="text-4xl mb-4">⚡</div>
+          <h3 class="text-white font-bold mb-2">Fast Installation</h3>
+          <p class="text-gray-400 text-sm">Most residential systems installed and live within 2–3 working days after approvals.</p>
+        </div>
+
+        <div class="reveal text-center p-6 bg-white/5 rounded-2xl border border-white/10 hover:border-solar-400/40 transition-all">
+          <div class="text-4xl mb-4">🌿</div>
+          <h3 class="text-white font-bold mb-2">Eco-Certified</h3>
+          <p class="text-gray-400 text-sm">ISO 9001 certified processes. Every installation contributes to a cleaner, greener India.</p>
+        </div>
+
+        <div class="reveal text-center p-6 bg-white/5 rounded-2xl border border-white/10 hover:border-solar-400/40 transition-all">
+          <div class="text-4xl mb-4">💡</div>
+          <h3 class="text-white font-bold mb-2">Smart Monitoring</h3>
+          <p class="text-gray-400 text-sm">Real-time production tracking via our mobile app — see your savings grow every day.</p>
+        </div>
+
+        <div class="reveal text-center p-6 bg-white/5 rounded-2xl border border-white/10 hover:border-solar-400/40 transition-all">
+          <div class="text-4xl mb-4">💰</div>
+          <h3 class="text-white font-bold mb-2">Transparent Pricing</h3>
+          <p class="text-gray-400 text-sm">No hidden charges. Fixed-price contracts with detailed breakdown before you sign.</p>
+        </div>
+
+        <div class="reveal text-center p-6 bg-white/5 rounded-2xl border border-white/10 hover:border-solar-400/40 transition-all">
+          <div class="text-4xl mb-4">🔁</div>
+          <h3 class="text-white font-bold mb-2">Net Metering Setup</h3>
+          <p class="text-gray-400 text-sm">We handle the entire net-metering application and DISCOM approval for you.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       TESTIMONIALS
+  ════════════════════════════════════════════════ -->
+  <section id="testimonials" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 reveal">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-navy-900 accent-line">What Our Customers Say</h2>
+        <p class="mt-4 text-gray-500 max-w-xl mx-auto">Thousands of happy homes and businesses across India trust SolarEdge.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <div class="reveal bg-white rounded-2xl shadow-md p-7 hover:shadow-xl transition-shadow">
+          <div class="stars text-lg mb-3">★★★★★</div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-5">"Our electricity bill dropped from ₹4,500 to just ₹180/month. The installation was done in 2 days and the team was super professional. Best investment we ever made!"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-solar-500 rounded-full flex items-center justify-center text-white font-bold text-sm">RS</div>
+            <div>
+              <p class="font-semibold text-navy-900 text-sm">Rajesh Sharma</p>
+              <p class="text-gray-400 text-xs">Homeowner, Jaipur</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal bg-white rounded-2xl shadow-md p-7 hover:shadow-xl transition-shadow">
+          <div class="stars text-lg mb-3">★★★★★</div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-5">"Got a 5 kW system with full government subsidy assistance. SolarEdge handled all the paperwork — I didn't have to do anything. Savings started immediately!"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-navy-900 rounded-full flex items-center justify-center text-white font-bold text-sm">PP</div>
+            <div>
+              <p class="font-semibold text-navy-900 text-sm">Priya Patel</p>
+              <p class="text-gray-400 text-xs">Business Owner, Ahmedabad</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal bg-white rounded-2xl shadow-md p-7 hover:shadow-xl transition-shadow">
+          <div class="stars text-lg mb-3">★★★★★</div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-5">"The smart monitoring app is amazing — I can see real-time generation from my phone. Customer support is available 24/7. Highly recommend SolarEdge to everyone!"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-solar-600 rounded-full flex items-center justify-center text-white font-bold text-sm">AM</div>
+            <div>
+              <p class="font-semibold text-navy-900 text-sm">Anil Mehta</p>
+              <p class="text-gray-400 text-xs">Factory Owner, Pune</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal bg-white rounded-2xl shadow-md p-7 hover:shadow-xl transition-shadow">
+          <div class="stars text-lg mb-3">★★★★★</div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-5">"Zero down payment EMI plan made it super easy to afford. The system paid for itself in under 4 years. My monthly savings are now more than my EMI!"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-bold text-sm">SK</div>
+            <div>
+              <p class="font-semibold text-navy-900 text-sm">Sunita Kumari</p>
+              <p class="text-gray-400 text-xs">Teacher, Lucknow</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal bg-white rounded-2xl shadow-md p-7 hover:shadow-xl transition-shadow">
+          <div class="stars text-lg mb-3">★★★★★</div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-5">"Installed 10 kW for our school. Kids now learn about clean energy and our operational costs are down 70%. SolarEdge delivered exactly what they promised."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm">VR</div>
+            <div>
+              <p class="font-semibold text-navy-900 text-sm">Vikram Rao</p>
+              <p class="text-gray-400 text-xs">School Principal, Nagpur</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal bg-white rounded-2xl shadow-md p-7 hover:shadow-xl transition-shadow">
+          <div class="stars text-lg mb-3">★★★★★</div>
+          <p class="text-gray-600 text-sm leading-relaxed mb-5">"Annual maintenance plan is worth every rupee. Panel cleaning and performance checks are done on schedule. My system has maintained 98% efficiency over 3 years!"</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-sm">DG</div>
+            <div>
+              <p class="font-semibold text-navy-900 text-sm">Deepak Gupta</p>
+              <p class="text-gray-400 text-xs">IT Professional, Bengaluru</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       FAQ SECTION
+  ════════════════════════════════════════════════ -->
+  <section id="faq" class="py-20 bg-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 reveal">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-navy-900 accent-line">Frequently Asked Questions</h2>
+        <p class="mt-4 text-gray-500">Everything you need to know before going solar.</p>
+      </div>
+
+      <div class="space-y-3 reveal" id="faq-list">
+
+        <!-- FAQ Item -->
+        <div class="faq-item bg-gray-50 rounded-2xl overflow-hidden shadow-sm">
+          <button class="faq-trigger w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-navy-900 hover:text-solar-500 transition-colors focus:outline-none">
+            How much does a solar system cost?
+            <span class="faq-icon text-solar-400 text-xl font-light ml-4 flex-shrink-0">＋</span>
+          </button>
+          <div class="faq-body px-6 pb-5 text-gray-500 text-sm leading-relaxed">
+            A 3 kW residential system typically costs ₹1.5–2 lakh before subsidies. After the central government subsidy (up to ₹78,000), net cost can be as low as ₹72,000. Our team will provide a precise quote after a free site assessment.
+          </div>
+        </div>
+
+        <div class="faq-item bg-gray-50 rounded-2xl overflow-hidden shadow-sm">
+          <button class="faq-trigger w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-navy-900 hover:text-solar-500 transition-colors focus:outline-none">
+            How long does installation take?
+            <span class="faq-icon text-solar-400 text-xl font-light ml-4 flex-shrink-0">＋</span>
+          </button>
+          <div class="faq-body px-6 pb-5 text-gray-500 text-sm leading-relaxed">
+            Most residential installations are completed in 1–2 days. The entire process from signing to system activation (including permits and DISCOM approvals) typically takes 2–4 weeks.
+          </div>
+        </div>
+
+        <div class="faq-item bg-gray-50 rounded-2xl overflow-hidden shadow-sm">
+          <button class="faq-trigger w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-navy-900 hover:text-solar-500 transition-colors focus:outline-none">
+            Will solar work on cloudy or rainy days?
+            <span class="faq-icon text-solar-400 text-xl font-light ml-4 flex-shrink-0">＋</span>
+          </button>
+          <div class="faq-body px-6 pb-5 text-gray-500 text-sm leading-relaxed">
+            Yes! Modern solar panels generate electricity from diffused light, not just direct sunlight. On cloudy days they produce 10–25% of peak capacity. With grid tie-in and net metering, your lights will always stay on.
+          </div>
+        </div>
+
+        <div class="faq-item bg-gray-50 rounded-2xl overflow-hidden shadow-sm">
+          <button class="faq-trigger w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-navy-900 hover:text-solar-500 transition-colors focus:outline-none">
+            What is the payback period?
+            <span class="faq-icon text-solar-400 text-xl font-light ml-4 flex-shrink-0">＋</span>
+          </button>
+          <div class="faq-body px-6 pb-5 text-gray-500 text-sm leading-relaxed">
+            With government subsidies included, most homes achieve payback in 3–5 years. After that, you essentially get free electricity for 20+ more years, saving several lakhs over the panel lifetime.
+          </div>
+        </div>
+
+        <div class="faq-item bg-gray-50 rounded-2xl overflow-hidden shadow-sm">
+          <button class="faq-trigger w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-navy-900 hover:text-solar-500 transition-colors focus:outline-none">
+            Do I need a battery backup?
+            <span class="faq-icon text-solar-400 text-xl font-light ml-4 flex-shrink-0">＋</span>
+          </button>
+          <div class="faq-body px-6 pb-5 text-gray-500 text-sm leading-relaxed">
+            For grid-connected systems, batteries are optional. Net metering means the grid itself acts as your "battery". If you live in an area with frequent power cuts, we offer hybrid systems with lithium battery storage.
+          </div>
+        </div>
+
+        <div class="faq-item bg-gray-50 rounded-2xl overflow-hidden shadow-sm">
+          <button class="faq-trigger w-full flex items-center justify-between px-6 py-4 text-left font-semibold text-navy-900 hover:text-solar-500 transition-colors focus:outline-none">
+            Who is eligible for the government subsidy?
+            <span class="faq-icon text-solar-400 text-xl font-light ml-4 flex-shrink-0">＋</span>
+          </button>
+          <div class="faq-body px-6 pb-5 text-gray-500 text-sm leading-relaxed">
+            Any residential consumer in India with a valid electricity connection is eligible. The subsidy applies to on-grid rooftop solar systems up to 10 kW. Commercial and industrial consumers have separate incentives.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       CONTACT FORM
+  ════════════════════════════════════════════════ -->
+  <section id="contact" class="py-20 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14 reveal">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-navy-900 accent-line">Get Your Free Quote</h2>
+        <p class="mt-4 text-gray-500 max-w-xl mx-auto">Fill in your details and our solar expert will call you back within 2 hours — absolutely free, no obligation.</p>
+      </div>
+
+      <div class="grid lg:grid-cols-5 gap-10">
+
+        <!-- Info column -->
+        <div class="lg:col-span-2 reveal space-y-6">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-solar-500/10 text-solar-500 rounded-xl flex items-center justify-center text-xl flex-shrink-0">📍</div>
+            <div>
+              <h4 class="font-bold text-navy-900">Address</h4>
+              <p class="text-gray-500 text-sm mt-1">42, Solar Park, Sector 18,<br/>Noida, Uttar Pradesh – 201301</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-solar-500/10 text-solar-500 rounded-xl flex items-center justify-center text-xl flex-shrink-0">📞</div>
+            <div>
+              <h4 class="font-bold text-navy-900">Phone</h4>
+              <p class="text-gray-500 text-sm mt-1">+91 98765 43210<br/>Mon–Sat, 9AM – 7PM</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 bg-solar-500/10 text-solar-500 rounded-xl flex items-center justify-center text-xl flex-shrink-0">✉️</div>
+            <div>
+              <h4 class="font-bold text-navy-900">Email</h4>
+              <p class="text-gray-500 text-sm mt-1">hello@solaredge.in<br/>We reply within 2 hours</p>
+            </div>
+          </div>
+          <!-- Trust badges -->
+          <div class="pt-4 flex flex-wrap gap-3">
+            <span class="text-xs font-medium bg-solar-50 text-solar-600 border border-solar-400/30 px-3 py-1 rounded-full">✔ MNRE Approved</span>
+            <span class="text-xs font-medium bg-solar-50 text-solar-600 border border-solar-400/30 px-3 py-1 rounded-full">✔ ISO 9001:2015</span>
+            <span class="text-xs font-medium bg-solar-50 text-solar-600 border border-solar-400/30 px-3 py-1 rounded-full">✔ 5,000+ Installs</span>
+          </div>
+        </div>
+
+        <!-- Form column -->
+        <div class="lg:col-span-3 reveal">
+          <form id="contact-form" onsubmit="handleFormSubmit(event)" class="bg-white rounded-3xl shadow-md p-8 space-y-5">
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label class="text-sm font-medium text-gray-700 block mb-1">Full Name <span class="text-red-400">*</span></label>
+                <input type="text" name="name" placeholder="Rajesh Sharma" required
+                       class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-solar-400 transition" />
+              </div>
+              <div>
+                <label class="text-sm font-medium text-gray-700 block mb-1">Phone Number <span class="text-red-400">*</span></label>
+                <input type="tel" name="phone" placeholder="+91 98765 43210" required pattern="[0-9+\s\-()]{7,15}"
+                       class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-solar-400 transition" />
+              </div>
+            </div>
+            <div>
+              <label class="text-sm font-medium text-gray-700 block mb-1">Email Address</label>
+              <input type="email" name="email" placeholder="you@example.com"
+                     class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-solar-400 transition" />
+            </div>
+            <div class="grid sm:grid-cols-2 gap-5">
+              <div>
+                <label class="text-sm font-medium text-gray-700 block mb-1">Monthly Electricity Bill</label>
+                <input type="text" name="bill" placeholder="₹ 3,000"
+                       class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-solar-400 transition" />
+              </div>
+              <div>
+                <label class="text-sm font-medium text-gray-700 block mb-1">Property Type</label>
+                <select name="property"
+                        class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-solar-400 transition appearance-none">
+                  <option>Residential</option>
+                  <option>Commercial</option>
+                  <option>Industrial</option>
+                  <option>Agricultural</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="text-sm font-medium text-gray-700 block mb-1">Message (optional)</label>
+              <textarea name="message" rows="3" placeholder="Any specific requirements or questions..."
+                        class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-solar-400 transition resize-none"></textarea>
+            </div>
+            <button type="submit"
+                    class="w-full bg-solar-500 hover:bg-solar-600 text-white font-semibold py-3 rounded-xl shadow-md transition-all hover:scale-[1.01] active:scale-95 text-sm">
+              Submit &amp; Get Free Quote →
+            </button>
+          </form>
+          <!-- Success message (hidden initially) -->
+          <div id="form-success" class="hidden mt-4 bg-green-50 border border-green-200 text-green-700 rounded-2xl px-6 py-4 text-sm text-center">
+            🎉 Thank you! Our solar expert will call you within 2 hours.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════
+       FOOTER
+  ════════════════════════════════════════════════ -->
+  <footer class="bg-navy-900 text-gray-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+
+        <!-- Brand -->
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-solar-400 text-2xl">&#9728;&#65039;</span>
+            <span class="text-white font-extrabold text-xl tracking-tight">Solar<span class="text-solar-400">Edge</span></span>
+          </div>
+          <p class="text-sm leading-relaxed mb-4">India's most trusted rooftop solar company. Powering homes and businesses with clean, affordable energy since 2016.</p>
+          <div class="flex gap-3">
+            <!-- Social icons (SVG placeholders) -->
+            <a href="#" aria-label="Facebook" class="w-9 h-9 bg-white/10 hover:bg-solar-500 rounded-lg flex items-center justify-center transition-colors text-sm">f</a>
+            <a href="#" aria-label="Twitter"  class="w-9 h-9 bg-white/10 hover:bg-solar-500 rounded-lg flex items-center justify-center transition-colors text-sm">𝕏</a>
+            <a href="#" aria-label="Instagram" class="w-9 h-9 bg-white/10 hover:bg-solar-500 rounded-lg flex items-center justify-center transition-colors text-sm">📷</a>
+            <a href="#" aria-label="LinkedIn"  class="w-9 h-9 bg-white/10 hover:bg-solar-500 rounded-lg flex items-center justify-center transition-colors text-sm">in</a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#home"        class="hover:text-solar-400 transition-colors">Home</a></li>
+            <li><a href="#services"    class="hover:text-solar-400 transition-colors">Services</a></li>
+            <li><a href="#calculator"  class="hover:text-solar-400 transition-colors">Savings Calculator</a></li>
+            <li><a href="#subsidy"     class="hover:text-solar-400 transition-colors">Government Subsidy</a></li>
+            <li><a href="#why-us"      class="hover:text-solar-400 transition-colors">Why Choose Us</a></li>
+            <li><a href="#faq"         class="hover:text-solar-400 transition-colors">FAQ</a></li>
+            <li><a href="#contact"     class="hover:text-solar-400 transition-colors">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Services -->
+        <div>
+          <h4 class="text-white font-semibold mb-4">Our Services</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#services" class="hover:text-solar-400 transition-colors">Rooftop Solar Installation</a></li>
+            <li><a href="#services" class="hover:text-solar-400 transition-colors">Commercial Solar</a></li>
+            <li><a href="#services" class="hover:text-solar-400 transition-colors">Ground Mount Systems</a></li>
+            <li><a href="#services" class="hover:text-solar-400 transition-colors">Annual Maintenance (AMC)</a></li>
+            <li><a href="#services" class="hover:text-solar-400 transition-colors">Solar + Battery Storage</a></li>
+            <li><a href="#services" class="hover:text-solar-400 transition-colors">Net Metering Assistance</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact Info -->
+        <div>
+          <h4 class="text-white font-semibold mb-4">Contact Info</h4>
+          <ul class="space-y-3 text-sm">
+            <li class="flex items-start gap-2">
+              <span class="mt-0.5">📍</span>
+              <span>42, Solar Park, Sector 18,<br/>Noida, UP – 201301</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span>📞</span>
+              <a href="tel:+919876543210" class="hover:text-solar-400 transition-colors">+91 98765 43210</a>
+            </li>
+            <li class="flex items-center gap-2">
+              <span>✉️</span>
+              <a href="mailto:hello@solaredge.in" class="hover:text-solar-400 transition-colors">hello@solaredge.in</a>
+            </li>
+            <li class="flex items-center gap-2">
+              <span>🕐</span>
+              <span>Mon–Sat, 9AM – 7PM</span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="mt-12 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+        <p>© <span id="footer-year"></span> SolarEdge. All rights reserved.</p>
+        <div class="flex gap-4">
+          <a href="#" class="hover:text-solar-400 transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-solar-400 transition-colors">Terms of Service</a>
+          <a href="#" class="hover:text-solar-400 transition-colors">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════════════════
+       JAVASCRIPT
+  ════════════════════════════════════════════════ -->
+  <script>
+    // ── Footer year ──────────────────────────────
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+
+    // ── Mobile navigation toggle ─────────────────
+    const menuBtn    = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen   = document.getElementById('icon-open');
+    const iconClose  = document.getElementById('icon-close');
+
+    menuBtn.addEventListener('click', () => {
+      const isHidden = mobileMenu.classList.toggle('hidden');
+      // isHidden === true means menu is now hidden → show hamburger icon
+      iconOpen.classList.toggle('hidden', !isHidden);
+      iconClose.classList.toggle('hidden', isHidden);
+    });
+
+    function closeMobileMenu() {
+      mobileMenu.classList.add('hidden');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+    }
+
+    // ── Scroll reveal animation ───────────────────
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer  = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── Savings Calculator ────────────────────────
+    function calculateSavings() {
+      const bill  = parseFloat(document.getElementById('calc-bill').value);
+      const state = document.getElementById('calc-state').value;
+
+      if (!bill || bill < 100) {
+        const billInput = document.getElementById('calc-bill');
+        const billError = document.getElementById('calc-bill-error');
+        billInput.classList.add('ring-2', 'ring-red-400');
+        billError.classList.remove('hidden');
+        setTimeout(() => {
+          billInput.classList.remove('ring-2', 'ring-red-400');
+          billError.classList.add('hidden');
+        }, 3000);
+        return;
+      }
+
+      // Approx ₹ per unit tariff by state (averages for FY 2024)
+      const tariffs = { maharashtra: 9, gujarat: 7.5, rajasthan: 7, karnataka: 8.5, up: 6.5, general: 8 };
+      const tariff  = tariffs[state] || 8;
+
+      const units    = bill / tariff;                  // monthly kWh consumed
+      // Average generation factor: ~120 kWh/kW/month (India average, varies 100–150 by region/season)
+      const systemKw = Math.ceil((units / 120) * 10) / 10;
+      const monthlySave = Math.round(bill * 0.85);     // ~85% savings on bill
+      const annualSave  = monthlySave * 12;
+      const systemCost  = systemKw * 45000;            // ₹45,000/kW installed (typical)
+
+      // PM Surya Ghar subsidy slabs (MNRE 2024):
+      //   ≤2 kW → ₹30,000/kW
+      //   2–3 kW → ₹30,000 for first 2kW + ₹18,000 for additional kW
+      //   >3 kW → flat ₹78,000 cap
+      function calcSubsidy(kw) {
+        if (kw <= 2)      return 30000 * kw;
+        if (kw <= 3)      return 60000 + 18000 * (kw - 2);
+        return 78000;
+      }
+      const subsidy = calcSubsidy(systemKw);
+      const netCost = Math.max(systemCost - subsidy, 0);
+      const payback = (netCost / annualSave).toFixed(1);
+
+      // Update DOM
+      document.getElementById('res-monthly').textContent = '₹' + monthlySave.toLocaleString('en-IN');
+      document.getElementById('res-annual').textContent  = '₹' + annualSave.toLocaleString('en-IN');
+      document.getElementById('res-size').textContent    = systemKw + ' kW';
+      document.getElementById('res-payback').textContent = payback + ' yrs';
+
+      const subsidyEl = document.getElementById('res-subsidy');
+      subsidyEl.classList.remove('hidden');
+      subsidyEl.textContent =
+        `Eligible subsidy: ₹${subsidy.toLocaleString('en-IN')} | ` +
+        `Net system cost: ₹${netCost.toLocaleString('en-IN')}`;
+    }
+
+    // Allow Enter key on bill input
+    document.getElementById('calc-bill').addEventListener('keyup', e => { if (e.key === 'Enter') calculateSavings(); });
+
+    // ── FAQ Accordion ─────────────────────────────
+    document.querySelectorAll('.faq-trigger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const body = item.querySelector('.faq-body');
+        const icon = item.querySelector('.faq-icon');
+        const isOpen = body.classList.contains('open');
+
+        // Close all
+        document.querySelectorAll('.faq-body').forEach(b => b.classList.remove('open'));
+        document.querySelectorAll('.faq-icon').forEach(i => { i.textContent = '＋'; });
+
+        if (!isOpen) {
+          body.classList.add('open');
+          icon.textContent = '－';
+        }
+      });
+    });
+
+    // ── Contact Form ──────────────────────────────
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const form    = document.getElementById('contact-form');
+      const success = document.getElementById('form-success');
+      form.classList.add('opacity-50', 'pointer-events-none');
+      // Simulate async submission
+      setTimeout(() => {
+        form.reset();
+        form.classList.remove('opacity-50', 'pointer-events-none');
+        form.classList.add('hidden');
+        success.classList.remove('hidden');
+      }, 800);
+    }
+  </script>
+
+</body>
+</html>
