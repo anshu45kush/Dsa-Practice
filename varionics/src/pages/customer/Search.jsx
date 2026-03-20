@@ -12,13 +12,7 @@ export default function Search() {
   const [activeFilter, setActiveFilter] = useState('All')
   const timerRef = useRef(null)
 
-  useEffect(() => {
-    return () => clearTimeout(timerRef.current)
-  }, [])
-
-  const handleQueryChange = (value) => {
-    setQuery(value)
-    setSearchQuery(value)
+  const startDebounce = (value) => {
     clearTimeout(timerRef.current)
     if (!value) {
       setLoading(false)
@@ -26,6 +20,16 @@ export default function Search() {
     }
     setLoading(true)
     timerRef.current = setTimeout(() => setLoading(false), 500)
+  }
+
+  useEffect(() => {
+    return () => clearTimeout(timerRef.current)
+  }, [])
+
+  const handleQueryChange = (value) => {
+    setQuery(value)
+    setSearchQuery(value)
+    startDebounce(value)
   }
 
   const filtered = products.filter(p => {
