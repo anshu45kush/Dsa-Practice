@@ -14,7 +14,7 @@ export default function Search() {
 
   useEffect(() => {
     return () => clearTimeout(timerRef.current)
-  }, [query])
+  }, [])
 
   const handleQueryChange = (value) => {
     setQuery(value)
