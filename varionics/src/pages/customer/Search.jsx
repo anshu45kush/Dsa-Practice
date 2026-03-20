@@ -13,7 +13,7 @@ export default function Search() {
   const [activeFilter, setActiveFilter] = useState('All')
   const timerRef = useRef(null)
 
-  const startDebounce = (value) => {
+  const debounceSearch = (value) => {
     clearTimeout(timerRef.current)
     if (!value) {
       setLoading(false)
@@ -30,7 +30,7 @@ export default function Search() {
   const handleQueryChange = (value) => {
     setQuery(value)
     setSearchQuery(value)
-    startDebounce(value)
+    debounceSearch(value)
   }
 
   const filtered = products.filter(p => {
