@@ -10,7 +10,7 @@ const STATUS_CONFIG = {
   Cancelled: { color: 'bg-red-100 text-red-700', dot: 'bg-red-500' },
 }
 
-const STATUSES = ['Placed', 'Accepted', 'Shipped', 'Delivered']
+const STATUSES = Object.keys(STATUS_CONFIG).filter(status => status !== 'Cancelled')
 
 export default function Orders() {
   const { orders } = useApp()
