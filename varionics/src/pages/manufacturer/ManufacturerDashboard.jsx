@@ -7,6 +7,7 @@ export default function ManufacturerDashboard() {
   const navigate = useNavigate()
   const myProducts = products.filter(p => p.seller === user.name)
   const incomingOrders = orders.filter(o => o.product.seller === user.name)
+  const averageMoq = myProducts.length ? Math.round(myProducts.reduce((sum, p) => sum + p.moq, 0) / myProducts.length) : 0
 
   return (
     <div className="px-4 py-5 space-y-5">
@@ -26,7 +27,7 @@ export default function ManufacturerDashboard() {
           { label: 'Live Products', value: myProducts.length, color: 'from-[#6C63FF] to-[#9C6FFF]', onClick: () => navigate('/products') },
           { label: 'Incoming Orders', value: incomingOrders.length, color: 'from-[#00B4DB] to-[#0083B0]', onClick: () => navigate('/orders') },
           { label: 'Pending Requests', value: incomingOrders.filter(o => o.status !== 'Delivered').length, color: 'from-[#FF9A9E] to-[#FAD0C4]', onClick: () => navigate('/orders') },
-          { label: 'Avg. MOQ', value: myProducts.length ? Math.round(myProducts.reduce((sum, p) => sum + p.moq, 0) / myProducts.length) : 0, color: 'from-[#11998e] to-[#38ef7d]' },
+          { label: 'Avg. MOQ', value: averageMoq, color: 'from-[#11998e] to-[#38ef7d]' },
         ].map(card => (
           <button
             key={card.label}

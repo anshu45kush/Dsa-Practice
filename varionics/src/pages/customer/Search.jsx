@@ -14,11 +14,12 @@ export default function Search() {
   const timerRef = useRef(null)
 
   const startDebounce = (value) => {
-    clearTimeout(timerRef.current)
     if (!value) {
+      clearTimeout(timerRef.current)
       setLoading(false)
       return
     }
+    clearTimeout(timerRef.current)
     setLoading(true)
     timerRef.current = setTimeout(() => setLoading(false), SEARCH_DEBOUNCE_MS)
   }
