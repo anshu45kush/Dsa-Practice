@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
-import { useApp } from '../context/AppContext'
-import ProductCard from '../components/ProductCard'
-import SkeletonCard from '../components/SkeletonCard'
+import { useEffect, useRef, useState } from 'react'
+import { useApp } from '../../context/AppContext'
+import ProductCard from '../../components/ProductCard'
+import SkeletonCard from '../../components/SkeletonCard'
 
 const CATEGORIES = ['All', 'Electronics', 'Fashion', 'Home', 'Sports']
 
@@ -10,14 +10,21 @@ export default function Search() {
   const [query, setQuery] = useState(searchQuery)
   const [loading, setLoading] = useState(false)
   const [activeFilter, setActiveFilter] = useState('All')
+  const timerRef = useRef(null)
 
-  useEffect(() => {
-    if (query) {
-      setLoading(true)
-      const t = setTimeout(() => setLoading(false), 500)
-      return () => clearTimeout(t)
+  useEffect(() => () => clearTimeout(timerRef.current), [])
+
+  const handleQueryChange = (value) => {
+    setQuery(value)
+    setSearchQuery(value)
+    clearTimeout(timerRef.current)
+    if (!value) {
+      setLoading(false)
+      return
     }
-  }, [query])
+    setLoading(true)
+    timerRef.current = setTimeout(() => setLoading(false), 500)
+  }
 
   const filtered = products.filter(p => {
     const matchesQuery = !query || p.title.toLowerCase().includes(query.toLowerCase()) || p.seller.toLowerCase().includes(query.toLowerCase())
@@ -37,13 +44,21 @@ export default function Search() {
         <input
           type="text"
           value={query}
-          onChange={(e) => { setQuery(e.target.value); setSearchQuery(e.target.value) }}
+          onChange={(e) => handleQueryChange(e.target.value)}
           placeholder="Search products, brands..."
           autoFocus
           className="w-full bg-white border border-gray-200 rounded-2xl pl-11 pr-10 py-3.5 text-sm focus:outline-none focus:border-[#6C63FF] focus:ring-2 focus:ring-[#6C63FF]/20 transition-all shadow-sm"
         />
         {query && (
-          <button onClick={() => { setQuery(''); setSearchQuery('') }} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
+          <button
+            onClick={() => {
+              clearTimeout(timerRef.current)
+              setQuery('')
+              setSearchQuery('')
+              setLoading(false)
+            }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+          >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>

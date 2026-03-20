@@ -14,7 +14,7 @@ export default function MyProducts() {
           <h2 className="text-xl font-extrabold text-gray-900">My Products</h2>
           <p className="text-xs text-gray-400 mt-0.5">{myProducts.length} listed</p>
         </div>
-        <Button variant="primary" onClick={() => navigate('/manufacturer/add-product')} className="!py-2.5 !px-4 !text-xs">
+        <Button variant="primary" onClick={() => navigate('/add-product')} className="!py-2.5 !px-4 !text-xs">
           + Add New
         </Button>
       </div>
@@ -24,7 +24,7 @@ export default function MyProducts() {
           <div className="text-4xl">🏭</div>
           <h3 className="text-base font-bold text-gray-900">No products yet</h3>
           <p className="text-sm text-gray-500">Start adding products for retailers</p>
-          <Button onClick={() => navigate('/manufacturer/add-product')}>Add First Product</Button>
+          <Button onClick={() => navigate('/add-product')}>Add First Product</Button>
         </div>
       ) : (
         <div className="space-y-3">

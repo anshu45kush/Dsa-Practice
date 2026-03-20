@@ -1,6 +1,6 @@
-import { useApp } from '../context/AppContext'
+import { useApp } from '../../context/AppContext'
 import { useNavigate } from 'react-router-dom'
-import Button from '../components/Button'
+import Button from '../../components/Button'
 
 const STATUS_CONFIG = {
   Placed: { color: 'bg-blue-100 text-blue-700', dot: 'bg-blue-500' },

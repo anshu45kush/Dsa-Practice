@@ -172,7 +172,7 @@ export default function ProductDetail() {
           </div>
         )}
         {role === 'manufacturer' && (
-          <Button variant="ghost" fullWidth onClick={() => navigate('/manufacturer/products')}>
+          <Button variant="ghost" fullWidth onClick={() => navigate('/products')}>
             View My Products
           </Button>
         )}
