@@ -11,6 +11,7 @@ export default function Search() {
   const [loading, setLoading] = useState(false)
   const [activeFilter, setActiveFilter] = useState('All')
   const timerRef = useRef(null)
+  const SEARCH_DEBOUNCE_MS = 500
 
   const startDebounce = (value) => {
     clearTimeout(timerRef.current)
@@ -19,7 +20,7 @@ export default function Search() {
       return
     }
     setLoading(true)
-    timerRef.current = setTimeout(() => setLoading(false), 500)
+    timerRef.current = setTimeout(() => setLoading(false), SEARCH_DEBOUNCE_MS)
   }
 
   useEffect(() => {

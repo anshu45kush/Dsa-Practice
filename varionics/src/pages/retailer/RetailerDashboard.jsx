@@ -2,10 +2,12 @@ import { useNavigate } from 'react-router-dom'
 import { useApp } from '../../context/AppContext'
 import Button from '../../components/Button'
 
+const BULK_ORDER_THRESHOLD = 10
+
 export default function RetailerDashboard() {
   const { shopProducts, orders, products } = useApp()
   const navigate = useNavigate()
-  const bulkOrders = orders.filter(o => o.quantity >= 10)
+  const bulkOrders = orders.filter(o => o.quantity >= BULK_ORDER_THRESHOLD)
 
   return (
     <div className="px-4 py-5 space-y-5">

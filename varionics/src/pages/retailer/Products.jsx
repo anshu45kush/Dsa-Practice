@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom'
 import { useApp } from '../../context/AppContext'
 import Button from '../../components/Button'
 
+const RETAIL_MARKUP = 1.3
+
 export default function RetailerProducts() {
   const { products, shopProducts, addToShop } = useApp()
   const navigate = useNavigate()
@@ -47,7 +49,7 @@ export default function RetailerProducts() {
                 <Button
                   variant={alreadyAdded ? 'ghost' : 'primary'}
                   disabled={alreadyAdded}
-                  onClick={() => addToShop(product, Math.round(product.bulkPrice * 1.3))}
+                  onClick={() => addToShop(product, Math.round(product.bulkPrice * RETAIL_MARKUP))}
                   className="!px-3 !py-2 !text-xs"
                 >
                   {alreadyAdded ? 'In Shop' : 'Add to Shop'}
