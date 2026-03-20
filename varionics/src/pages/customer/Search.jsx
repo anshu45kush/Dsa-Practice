@@ -4,6 +4,7 @@ import ProductCard from '../../components/ProductCard'
 import SkeletonCard from '../../components/SkeletonCard'
 
 const CATEGORIES = ['All', 'Electronics', 'Fashion', 'Home', 'Sports']
+const SEARCH_DEBOUNCE_MS = 500
 
 export default function Search() {
   const { products, searchQuery, setSearchQuery } = useApp()
@@ -11,7 +12,6 @@ export default function Search() {
   const [loading, setLoading] = useState(false)
   const [activeFilter, setActiveFilter] = useState('All')
   const timerRef = useRef(null)
-  const SEARCH_DEBOUNCE_MS = 500
 
   const startDebounce = (value) => {
     clearTimeout(timerRef.current)
@@ -58,12 +58,7 @@ export default function Search() {
         />
         {query && (
           <button
-            onClick={() => {
-              clearTimeout(timerRef.current)
-              setQuery('')
-              setSearchQuery('')
-              setLoading(false)
-            }}
+            onClick={() => handleQueryChange('')}
             className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

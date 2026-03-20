@@ -14,7 +14,7 @@ const CATEGORIES = [
   { label: 'Books',       emoji: '📚' },
 ]
 
-const INITIAL_LOAD_DELAY_MS = 1200
+const LOADING_DELAY_MS = 1200
 
 export default function CustomerHome() {
   const { products, user } = useApp()
@@ -23,7 +23,7 @@ export default function CustomerHome() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), INITIAL_LOAD_DELAY_MS)
+    const t = setTimeout(() => setLoading(false), LOADING_DELAY_MS)
     return () => clearTimeout(t)
   }, [])
 

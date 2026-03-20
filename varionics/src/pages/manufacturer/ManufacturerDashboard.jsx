@@ -28,12 +28,18 @@ export default function ManufacturerDashboard() {
           { label: 'Pending Requests', value: incomingOrders.filter(o => o.status !== 'Delivered').length, color: 'from-[#FF9A9E] to-[#FAD0C4]', onClick: () => navigate('/orders') },
           { label: 'Avg. MOQ', value: myProducts.length ? Math.round(myProducts.reduce((sum, p) => sum + p.moq, 0) / myProducts.length) : 0, color: 'from-[#11998e] to-[#38ef7d]' },
         ].map(card => (
-          <div key={card.label} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4">
+          <button
+            key={card.label}
+            type="button"
+            onClick={card.onClick}
+            disabled={!card.onClick}
+            className={`bg-white rounded-2xl border border-gray-100 shadow-sm p-4 text-left transition-all ${card.onClick ? 'active:scale-95' : 'opacity-90 cursor-default'}`}
+          >
             <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${card.color} text-white font-extrabold text-sm flex items-center justify-center mb-2`}>
               {card.value}
             </div>
             <p className="text-xs text-gray-500 font-semibold uppercase tracking-wide">{card.label}</p>
-          </div>
+          </button>
         ))}
       </div>
 
