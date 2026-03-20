@@ -45,7 +45,7 @@ export default function AddProduct() {
         moq: Number(form.moq),
         image: form.image || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=400&fit=crop',
       })
-      navigate('/manufacturer/products')
+      navigate('/products')
     }, 800)
   }
 

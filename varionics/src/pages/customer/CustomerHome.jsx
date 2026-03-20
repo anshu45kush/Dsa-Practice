@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useApp } from '../context/AppContext'
-import ProductCard from '../components/ProductCard'
-import SkeletonCard from '../components/SkeletonCard'
+import { useApp } from '../../context/AppContext'
+import ProductCard from '../../components/ProductCard'
+import SkeletonCard from '../../components/SkeletonCard'
 
 const CATEGORIES = [
   { label: 'All',         emoji: '✦' },
@@ -14,14 +14,16 @@ const CATEGORIES = [
   { label: 'Books',       emoji: '📚' },
 ]
 
-export default function Home() {
+const LOADING_DELAY_MS = 1200
+
+export default function CustomerHome() {
   const { products, user } = useApp()
   const navigate = useNavigate()
   const [activeCategory, setActiveCategory] = useState('All')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 1200)
+    const t = setTimeout(() => setLoading(false), LOADING_DELAY_MS)
     return () => clearTimeout(t)
   }, [])
 

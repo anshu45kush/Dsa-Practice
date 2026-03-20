@@ -1,4 +1,4 @@
-import { useApp } from '../context/AppContext'
+import { useApp } from '../../context/AppContext'
 import { useNavigate } from 'react-router-dom'
 
 const ROLES = ['customer', 'retailer', 'manufacturer']
@@ -10,12 +10,12 @@ const roleNavItems = {
   ],
   retailer: [
     { label: 'My Orders', icon: '📦', path: '/orders', desc: 'View order history' },
-    { label: 'My Shop', icon: '🏪', path: '/retailer/shop', desc: 'Manage your store' },
-    { label: 'Bulk Orders', icon: '📋', path: '/retailer/bulk-orders', desc: 'Wholesale orders' },
+    { label: 'My Shop', icon: '🏪', path: '/shop', desc: 'Manage your store' },
+    { label: 'Bulk Orders', icon: '📋', path: '/orders', desc: 'Wholesale orders' },
   ],
   manufacturer: [
-    { label: 'My Products', icon: '🏭', path: '/manufacturer/products', desc: 'Manage products' },
-    { label: 'Add Product', icon: '➕', path: '/manufacturer/add-product', desc: 'List new product' },
+    { label: 'My Products', icon: '🏭', path: '/products', desc: 'Manage products' },
+    { label: 'Add Product', icon: '➕', path: '/add-product', desc: 'List new product' },
     { label: 'Orders', icon: '📦', path: '/orders', desc: 'View all orders' },
   ],
 }

@@ -1,6 +1,6 @@
-import { useApp } from '../context/AppContext'
+import { useApp } from '../../context/AppContext'
 import { useNavigate } from 'react-router-dom'
-import Button from '../components/Button'
+import Button from '../../components/Button'
 
 const STATUS_CONFIG = {
   Placed: { color: 'bg-blue-100 text-blue-700', dot: 'bg-blue-500' },
@@ -9,6 +9,8 @@ const STATUS_CONFIG = {
   Delivered: { color: 'bg-green-100 text-green-700', dot: 'bg-green-500' },
   Cancelled: { color: 'bg-red-100 text-red-700', dot: 'bg-red-500' },
 }
+
+const STATUSES = ['Placed', 'Accepted', 'Shipped', 'Delivered']
 
 export default function Orders() {
   const { orders } = useApp()
@@ -59,9 +61,8 @@ export default function Orders() {
               {/* Status progress bar */}
               <div className="px-4 pb-4">
                 <div className="flex items-center gap-1">
-                  {['Placed', 'Accepted', 'Shipped', 'Delivered'].map((s, i) => {
-                    const statuses = ['Placed', 'Accepted', 'Shipped', 'Delivered']
-                    const currentIdx = statuses.indexOf(order.status)
+                  {STATUSES.map((s, i) => {
+                    const currentIdx = STATUSES.indexOf(order.status)
                     const isCompleted = i <= currentIdx
                     return (
                       <div key={s} className="flex-1 flex items-center gap-1">
@@ -71,9 +72,8 @@ export default function Orders() {
                   })}
                 </div>
                 <div className="flex justify-between mt-1">
-                  {['Placed', 'Accepted', 'Shipped', 'Delivered'].map((s, i) => {
-                    const statuses = ['Placed', 'Accepted', 'Shipped', 'Delivered']
-                    const currentIdx = statuses.indexOf(order.status)
+                  {STATUSES.map((s, i) => {
+                    const currentIdx = STATUSES.indexOf(order.status)
                     return (
                       <span key={s} className={`text-[9px] font-medium ${i <= currentIdx ? 'text-[#6C63FF]' : 'text-gray-300'}`}>{s}</span>
                     )
