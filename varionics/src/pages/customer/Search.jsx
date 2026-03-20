@@ -12,7 +12,9 @@ export default function Search() {
   const [activeFilter, setActiveFilter] = useState('All')
   const timerRef = useRef(null)
 
-  useEffect(() => () => clearTimeout(timerRef.current), [])
+  useEffect(() => {
+    return () => clearTimeout(timerRef.current)
+  }, [query])
 
   const handleQueryChange = (value) => {
     setQuery(value)

@@ -13,6 +13,7 @@ const STATUS_CONFIG = {
 export default function Orders() {
   const { orders } = useApp()
   const navigate = useNavigate()
+  const statuses = ['Placed', 'Accepted', 'Shipped', 'Delivered']
 
   if (orders.length === 0) {
     return (
@@ -59,8 +60,7 @@ export default function Orders() {
               {/* Status progress bar */}
               <div className="px-4 pb-4">
                 <div className="flex items-center gap-1">
-                  {['Placed', 'Accepted', 'Shipped', 'Delivered'].map((s, i) => {
-                    const statuses = ['Placed', 'Accepted', 'Shipped', 'Delivered']
+                  {statuses.map((s, i) => {
                     const currentIdx = statuses.indexOf(order.status)
                     const isCompleted = i <= currentIdx
                     return (
@@ -71,8 +71,7 @@ export default function Orders() {
                   })}
                 </div>
                 <div className="flex justify-between mt-1">
-                  {['Placed', 'Accepted', 'Shipped', 'Delivered'].map((s, i) => {
-                    const statuses = ['Placed', 'Accepted', 'Shipped', 'Delivered']
+                  {statuses.map((s, i) => {
                     const currentIdx = statuses.indexOf(order.status)
                     return (
                       <span key={s} className={`text-[9px] font-medium ${i <= currentIdx ? 'text-[#6C63FF]' : 'text-gray-300'}`}>{s}</span>
