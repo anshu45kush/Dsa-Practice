@@ -3,122 +3,129 @@ import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import ProductCard from '../components/ProductCard'
 import SkeletonCard from '../components/SkeletonCard'
-import Button from '../components/Button'
 
-const CATEGORIES = ['All', 'Electronics', 'Fashion', 'Home', 'Sports', 'Beauty', 'Books']
+const CATEGORIES = [
+  { label: 'All',         emoji: '✦' },
+  { label: 'Electronics', emoji: '⚡' },
+  { label: 'Fashion',     emoji: '👗' },
+  { label: 'Home',        emoji: '🏠' },
+  { label: 'Sports',      emoji: '🏃' },
+  { label: 'Beauty',      emoji: '✨' },
+  { label: 'Books',       emoji: '📚' },
+]
 
 export default function Home() {
-  const { products, role } = useApp()
+  const { products, user } = useApp()
   const navigate = useNavigate()
   const [activeCategory, setActiveCategory] = useState('All')
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 1000)
+    const t = setTimeout(() => setLoading(false), 1200)
     return () => clearTimeout(t)
   }, [])
 
-  const filtered = products.filter(p => {
-    const matchesCategory = activeCategory === 'All' || p.category === activeCategory
-    return matchesCategory
-  })
+  const filtered = products.filter(p =>
+    activeCategory === 'All' || p.category === activeCategory
+  )
+
+  const hour = new Date().getHours()
+  const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
+  const firstName = user?.name?.split(' ')[0] ?? 'there'
 
   return (
-    <div className="px-4 py-4 space-y-5">
-      {/* Search Bar */}
-      <button
-        onClick={() => navigate('/search')}
-        className="w-full bg-white rounded-2xl border border-gray-200 px-4 py-3.5 flex items-center gap-3 shadow-sm hover:shadow-md transition-shadow text-left"
-      >
-        <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-        <span className="text-sm text-gray-400">Search products...</span>
-      </button>
+    <div className="px-4 pt-5 pb-6 space-y-6">
 
-      {/* Banner */}
-      <div className="bg-gradient-to-r from-[#6C63FF] to-[#9C6FFF] rounded-3xl p-5 text-white shadow-[0_8px_30px_rgba(108,99,255,0.35)]">
-        <p className="text-xs font-semibold opacity-80 mb-1">🔥 Special Offer</p>
-        <h2 className="text-xl font-bold leading-tight mb-1">Bulk Orders<br/>Up to 40% Off</h2>
-        <p className="text-xs opacity-70 mb-4">For retailers &amp; manufacturers</p>
-        <Button variant="secondary" className="!bg-white !text-[#6C63FF] !py-2.5 !text-xs" onClick={() => navigate('/search')}>
-          Explore Now →
-        </Button>
-      </div>
-
-      {/* Role-specific CTA */}
-      {role === 'manufacturer' && (
-        <button
-          onClick={() => navigate('/manufacturer/add-product')}
-          className="w-full bg-purple-50 border border-purple-200 rounded-2xl p-4 flex items-center gap-3 active:scale-[0.98] transition-all"
-        >
-          <div className="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center shrink-0">
-            <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-            </svg>
-          </div>
-          <div className="text-left">
-            <p className="text-sm font-bold text-gray-900">Add New Product</p>
-            <p className="text-xs text-gray-500">List your product for retailers</p>
-          </div>
-          <svg className="w-4 h-4 text-gray-400 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      )}
-      {role === 'retailer' && (
-        <button
-          onClick={() => navigate('/retailer/shop')}
-          className="w-full bg-green-50 border border-green-200 rounded-2xl p-4 flex items-center gap-3 active:scale-[0.98] transition-all"
-        >
-          <div className="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center shrink-0">
-            <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-          </div>
-          <div className="text-left">
-            <p className="text-sm font-bold text-gray-900">My Shop</p>
-            <p className="text-xs text-gray-500">Manage your retail products</p>
-          </div>
-          <svg className="w-4 h-4 text-gray-400 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      )}
-
-      {/* Categories */}
-      <div className="flex gap-2 overflow-x-auto hide-scrollbar -mx-4 px-4 pb-1">
-        {CATEGORIES.map(cat => (
-          <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`shrink-0 px-4 py-2 rounded-full text-xs font-semibold transition-all duration-150 active:scale-95 ${
-              activeCategory === cat
-                ? 'bg-[#6C63FF] text-white shadow-[0_2px_10px_rgba(108,99,255,0.35)]'
-                : 'bg-white text-gray-500 border border-gray-200'
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
-      {/* Product Grid */}
-      <div>
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="text-base font-bold text-gray-900">
-            {activeCategory === 'All' ? 'All Products' : activeCategory}
-            <span className="text-sm font-normal text-gray-400 ml-2">({filtered.length})</span>
-          </h3>
+      {/* ── Greeting + Search ── */}
+      <div className="space-y-4">
+        <div>
+          <p className="text-[13px] text-gray-400 font-medium">{greeting} 👋</p>
+          <h1 className="text-[22px] font-extrabold text-gray-900 leading-tight tracking-tight mt-0.5">
+            {firstName}, what are<br />you looking for?
+          </h1>
         </div>
+
+        <button
+          onClick={() => navigate('/search')}
+          className="w-full flex items-center gap-3 bg-white rounded-2xl px-4 py-3.5 shadow-[0_2px_12px_rgba(0,0,0,0.07)] active:scale-[0.99] transition-all"
+        >
+          <svg className="w-[18px] h-[18px] text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <span className="text-[14px] text-gray-400 font-medium">Search products, brands…</span>
+        </button>
+      </div>
+
+      {/* ── Promo Banner ── */}
+      <div className="relative overflow-hidden rounded-3xl bg-[#1A1147] px-5 py-6 shadow-[0_8px_30px_rgba(108,99,255,0.28)]">
+        {/* decorative circles */}
+        <div className="absolute -top-8 -right-8 w-40 h-40 rounded-full bg-[#6C63FF]/30" />
+        <div className="absolute -bottom-10 -right-2 w-28 h-28 rounded-full bg-[#9C6FFF]/20" />
+
+        <div className="relative z-10">
+          <span className="text-[11px] font-semibold text-[#A89FFF] uppercase tracking-widest">Bulk Special</span>
+          <h2 className="mt-1.5 text-[20px] font-extrabold text-white leading-tight">
+            Up to 40% off<br />on bulk orders
+          </h2>
+          <p className="mt-1.5 text-[12px] text-white/50">Exclusive deals for retailers & manufacturers</p>
+          <button
+            onClick={() => navigate('/search')}
+            className="mt-4 inline-flex items-center gap-1.5 bg-white text-[#1A1147] text-[12px] font-bold px-4 py-2.5 rounded-xl active:scale-95 transition-all"
+          >
+            Explore deals
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      {/* ── Categories ── */}
+      <div className="space-y-3">
+        <h2 className="text-[16px] font-bold text-gray-900">Categories</h2>
+        <div className="flex gap-2 overflow-x-auto hide-scrollbar -mx-4 px-4 pb-0.5">
+          {CATEGORIES.map(({ label, emoji }) => {
+            const active = activeCategory === label
+            return (
+              <button
+                key={label}
+                onClick={() => setActiveCategory(label)}
+                className={`shrink-0 flex items-center gap-1.5 px-4 py-2.5 rounded-2xl text-[12px] font-semibold transition-all duration-150 active:scale-95 ${
+                  active
+                    ? 'bg-[#6C63FF] text-white shadow-[0_4px_12px_rgba(108,99,255,0.35)]'
+                    : 'bg-white text-gray-600 shadow-[0_1px_4px_rgba(0,0,0,0.07)]'
+                }`}
+              >
+                <span className="text-[13px]">{emoji}</span>
+                {label}
+              </button>
+            )
+          })}
+        </div>
+      </div>
+
+      {/* ── Product Grid ── */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-[16px] font-bold text-gray-900">
+            {activeCategory === 'All' ? 'All Products' : activeCategory}
+          </h2>
+          {!loading && filtered.length > 0 && (
+            <span className="text-[12px] font-semibold text-[#6C63FF]">
+              {filtered.length} items
+            </span>
+          )}
+        </div>
+
         {loading ? (
           <div className="grid grid-cols-2 gap-3">
-            {[...Array(6)].map((_, i) => <SkeletonCard key={i} />)}
+            {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
           </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="text-4xl mb-3">🔍</div>
-            <p className="text-gray-500 text-sm">No products found</p>
+          <div className="flex flex-col items-center justify-center py-20 gap-3 text-center">
+            <span className="text-4xl">🔍</span>
+            <p className="text-[14px] font-semibold text-gray-700">No products found</p>
+            <p className="text-[12px] text-gray-400">Try a different category</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-3">
@@ -126,6 +133,7 @@ export default function Home() {
           </div>
         )}
       </div>
+
     </div>
   )
 }
